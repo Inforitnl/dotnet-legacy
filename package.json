@@ -1,0 +1,14 @@
+{
+  "name": "bitbucketbuildcontainer",
+  "version": "1.0.0",
+  "description": "Inforit Bitbucket TF2 build docker",
+  "main": "Dockerfile",
+  "scripts": {
+    "build": "docker build -t inforitnl/build .",
+    "start": "docker run -v C:/Projects/global-quote:/source -v C:/Projects/BitBucketBuildContainer/output:/output inforitnl/build",
+    "prestart": "echo \"starting build\" && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "PvdB RvL",
+  "license": "MIT"
+}
