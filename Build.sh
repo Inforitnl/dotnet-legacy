@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# return failing exit code if any command fails
+set -e
+
+# enable nullglob - allows filename patterns which match no files to expand to a null string, rather than themselves
+shopt -s nullglob
+
 ROOTDIRECTORY="/source"
 BINDIRECTORY="${BINDIRECTORY:-"/source/server/Inforit.*.Web/bin"}"
 
@@ -12,7 +18,9 @@ else
     cd /source || return
 fi
 
+# Location of the back-end (always server in legacy projects)
 cd server
+
 
 nuget restore
 msbuild *.sln
@@ -24,7 +32,9 @@ mv appsettings.config /output/
 mv Web.config /output/
 mv connectionstrings.config /output/
 
-cd $ROOTDIRECTORY/client
+# build and copy the front-end artefact
+cd "$ROOTDIRECTORY"/client
 npm install
-npm run build
+npm run build --if-present
+npm run test --if-present
 mv ./dist /output/client
