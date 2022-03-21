@@ -12,6 +12,6 @@ RUN apt-get update && \
 RUN mkdir -p /source
 RUN mkdir -p /output
 WORKDIR /source
-
+COPY NuGet.Config /root/.nuget/NuGet/NuGet.Config
 COPY Build.sh /Build.sh
 CMD ["/bin/bash", "/Build.sh"]
