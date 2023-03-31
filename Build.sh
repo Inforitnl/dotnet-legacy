@@ -7,7 +7,7 @@ set -e
 shopt -s nullglob
 
 ROOTDIRECTORY="/source"
-BINDIRECTORY="${BINDIRECTORY:-"/source/server/Inforit.*.Web/bin"}"
+PROJECTDIRECTORY=Inforit.*.Web
 
 # go to the workdir
 if [ -n "$BITBUCKET_CLONE_DIR" ]
@@ -31,19 +31,26 @@ fi
 cd server
 
 
+echo "Building .NET solution"
 nuget restore
 msbuild *.sln
-mv $BINDIRECTORY /output/
-cd $BINDIRECTORY
-cd ..
-mv Nlog.config /output/
-mv appsettings.config /output/
-mv Web.config /output/
-mv connectionstrings.config /output/
 
-# build and copy the front-end artefact
+echo "Moving .NET artifact to output"
+cd $PROJECTDIRECTORY
+mv bin /output/
+
+echo "Moving .NET configurations to output"
+mv NLog.default.config /output/NLog.config
+mv appsettings.default.config /output/appsettings.config
+mv Web.config /output/
+mv connectionstrings.default.config /output/connectionstrings.config
+
+# build and copy the front-end artifact
 cd "$ROOTDIRECTORY"/client
+echo "Building node.js"
 npm install
 npm run build --if-present
 npm run test --if-present
+
+echo "Moving node.js artifact to output"
 mv ./dist /output/client
