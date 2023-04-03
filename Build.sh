@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # return failing exit code if any command fails
 set -e
 
@@ -47,10 +45,16 @@ mv connectionstrings.default.config /output/connectionstrings.config
 
 # build and copy the front-end artifact
 cd "$ROOTDIRECTORY"/client
-echo "Building node.js"
+echo "Building the front-end artifact"
+
+# nodejs is managed via nvm, it must be started to use nodejs commands
+. ~/.nvm/nvm.sh
+source ~/.bashrc
+nvm use ${NODEVERSION} 
+
 npm install
 npm run build --if-present
 npm run test --if-present
 
-echo "Moving node.js artifact to output"
+echo "Moving the front-end artifact to output"
 mv ./dist /output/client
