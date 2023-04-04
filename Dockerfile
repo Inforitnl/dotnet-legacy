@@ -13,7 +13,8 @@ RUN touch ~/.bashrc && chmod +x ~/.bashrc
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 
 # customize build environment, add build script
-FROM base as dotnetbuild
+# build this stage to have base image for GQ build
+FROM base as monobuild
 RUN mkdir -p /source
 RUN mkdir -p /output
 WORKDIR /source
@@ -21,12 +22,7 @@ COPY NuGet.Config /root/.nuget/NuGet/NuGet.Config
 COPY Build.sh /Build.sh
 CMD ["/bin/bash", "/Build.sh"]
 
-# build this stage for global quote
-FROM dotnetbuild as globalquotebuild
-ENV NODEVERSION=14.16.1
-RUN . ~/.nvm/nvm.sh && source ~/.bashrc && nvm install ${NODEVERSION} 
-
 # build this stage for the rest of TF2 apps
-FROM dotnetbuild as defaultbuild
+FROM monobuild as defaultbuild
 ENV NODEVERSION=19.8.1
 RUN . ~/.nvm/nvm.sh && source ~/.bashrc && nvm install ${NODEVERSION} 
