@@ -5,7 +5,6 @@ set -e
 shopt -s nullglob
 
 ROOTDIRECTORY="/source"
-PROJECTDIRECTORY=Inforit.*.Web
 
 # go to the workdir
 if [ -n "$BITBUCKET_CLONE_DIR" ]
@@ -34,7 +33,7 @@ nuget restore
 msbuild *.sln
 
 echo "Moving .NET artifact to output"
-cd $PROJECTDIRECTORY
+cd Inforit.*.Web
 mv bin /output/
 
 echo "Moving .NET configurations to output"
