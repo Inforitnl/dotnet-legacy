@@ -37,10 +37,10 @@ cd Inforit.*.Web
 mv bin /output/
 
 echo "Moving .NET configurations to output"
-mv NLog.default.config /output/NLog.config
-mv appsettings.default.config /output/appsettings.config
-mv Web.config /output/
-mv connectionstrings.default.config /output/connectionstrings.config
+cp NLog.config /output/NLog.config
+cp appsettings.config /output/appsettings.config
+cp Web.config /output/
+cp connectionstrings.config /output/connectionstrings.config
 
 # build and copy the front-end artifact
 cd "$ROOTDIRECTORY"/client
