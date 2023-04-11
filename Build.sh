@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # return failing exit code if any command fails
 set -e
 
@@ -7,7 +5,6 @@ set -e
 shopt -s nullglob
 
 ROOTDIRECTORY="/source"
-BINDIRECTORY="${BINDIRECTORY:-"/source/server/Inforit.*.Web/bin"}"
 
 # go to the workdir
 if [ -n "$BITBUCKET_CLONE_DIR" ]
@@ -31,19 +28,32 @@ fi
 cd server
 
 
+echo "Building .NET solution"
 nuget restore
 msbuild *.sln
-mv $BINDIRECTORY /output/
-cd $BINDIRECTORY
-cd ..
-mv Nlog.config /output/
-mv appsettings.config /output/
-mv Web.config /output/
-mv connectionstrings.config /output/
 
-# build and copy the front-end artefact
+echo "Moving .NET artifact to output"
+cd Inforit.*.Web
+mv bin /output/
+
+echo "Moving .NET configurations to output"
+cp NLog.config /output/NLog.config
+cp appsettings.config /output/appsettings.config
+cp Web.config /output/
+cp connectionstrings.config /output/connectionstrings.config
+
+# build and copy the front-end artifact
 cd "$ROOTDIRECTORY"/client
+echo "Building the front-end artifact"
+
+# nodejs is managed via nvm, it must be started to use nodejs commands
+. ~/.nvm/nvm.sh
+source ~/.bashrc
+nvm use ${NODEVERSION} 
+
 npm install
 npm run build --if-present
 npm run test --if-present
+
+echo "Moving the front-end artifact to output"
 mv ./dist /output/client
