@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added [build-and-tag.sh](./build-and-tag.sh) file which houses the app -> version mappings and container build logic
 - utilized the package.json file with some script to build different containers for different pieces of software
 
+### Global quote 1.0.1
+
+- Also exported built-time NODEVERSION as a runtime ENV variable.
+
 ## [2.0.0] - Ubuntu update
 
 Ubuntu image version updated to kinetic.

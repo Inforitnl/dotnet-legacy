@@ -7,7 +7,7 @@ declare -A dotnetLegacy=(
 )
 
 declare -A globalQuote=(
-    [version]="1.0.0"
+    [version]="1.0.1"
     [nodeVersion]="14.16.1"
     [name]="global-quote-build"
 )

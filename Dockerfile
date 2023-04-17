@@ -24,4 +24,5 @@ CMD ["/bin/bash", "/Build.sh"]
 # build this stage for the rest of TF2 apps
 FROM monobuild 
 ARG NODEVERSION=19.8.1
+ENV NODEVERSION=${NODEVERSION}
 RUN . ~/.nvm/nvm.sh && . ~/.bashrc && nvm install $NODEVERSION 
