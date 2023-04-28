@@ -5,7 +5,7 @@
   "main": "Dockerfile",
   "scripts": {
     "build": "docker build -t inforitnl/dotnet-legacy .",
-    "tag": "docker tag inforitnl/dotnet-legacy",
+    "build-global-quote": "export TARGET='globalQuote' && ./build-and-tag.sh",
     "push": "docker push inforitnl/dotnet-legacy"
   },
   "author": "PvdB, Rick van Lieshout <info@rickvanlieshout.com> (http://rickvanlieshout.com)",

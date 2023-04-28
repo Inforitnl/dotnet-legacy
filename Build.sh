@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # return failing exit code if any command fails
 set -e
 
@@ -7,8 +9,7 @@ shopt -s nullglob
 ROOTDIRECTORY="/source"
 
 # go to the workdir
-if [ -n "$BITBUCKET_CLONE_DIR" ]
-then
+if [ -n "$BITBUCKET_CLONE_DIR" ]; then
     cd "$BITBUCKET_CLONE_DIR" || return
     ROOTDIRECTORY="$BITBUCKET_CLONE_DIR"
 else
@@ -16,8 +17,7 @@ else
 fi
 
 # Add nuget source if access token is set
-if [ -n "$MYGET_ACCESS_TOKEN" ]
-then
+if [ -n "$MYGET_ACCESS_TOKEN" ]; then
     echo "Adding private myget source"
     SOURCE="https://www.myget.org/F/inforit/auth/$MYGET_ACCESS_TOKEN/api/v3/index.json"
     VAR=$(sed "/<\/packageSources>/i <add key=\"inforit.org\" value=\"$SOURCE\" protocolVersion=\"3\" />" ~/.nuget/NuGet/NuGet.Config)
@@ -27,7 +27,6 @@ fi
 
 # Location of the back-end (always server in legacy projects)
 cd server
-
 
 echo "Building .NET solution"
 nuget restore
@@ -50,7 +49,7 @@ echo "Building the front-end artifact"
 # nodejs is managed via nvm, it must be started to use nodejs commands
 . ~/.nvm/nvm.sh
 source ~/.bashrc
-nvm use ${NODEVERSION} 
+nvm use ${NODEVERSION}
 
 npm install
 npm run build --if-present
