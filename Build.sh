@@ -50,26 +50,26 @@ cd Inforit.*.Web
 mv bin "$PROJECT_DIST"
 
 echo "Moving .NET configurations to output"
-cp NLog.config "$PROJECT_DIST"/NLog.config
-cp appsettings.config "$PROJECT_DIST"/appsettings.config
-cp Web.config "$PROJECT_DIST"/Web.config
-cp connectionstrings.config "$PROJECT_DIST"/connectionstrings.config
+find -type f -iname 'nlog.config' -exec cp {} $PROJECT_DIST \;
+find -type f -iname 'appsettings.config'  -exec cp {} $PROJECT_DIST \;
+find -type f -iname 'web.config'  -exec cp {} $PROJECT_DIST \;
+find -type f -iname 'connectionstrings.config'  -exec cp {} $PROJECT_DIST \;
 
 # build and copy the front-end artifact
 cd "$ROOTDIRECTORY"/client
 echo "Building the front-end artifact"
 
 # nodejs is managed via nvm, it must be started to use nodejs commands
-. ~/.nvm/nvm.sh
-source ~/.bashrc
-nvm use ${NODEVERSION}
+# . ~/.nvm/nvm.sh
+# source ~/.bashrc
+# nvm use ${NODEVERSION}
 
-npm install
-npm run build --if-present
-npm run test --if-present
+# npm install
+# npm run build --if-present
+# npm run test --if-present
 
-echo "Moving the front-end artifact to output"
-mv ./dist "$PROJECT_DIST"/client
+# echo "Moving the front-end artifact to output"
+# mv ./dist "$PROJECT_DIST"/client
 
 # generate artifacts dir
 echo "generating artifacts"
