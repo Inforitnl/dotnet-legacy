@@ -52,7 +52,7 @@ mv bin "$PROJECT_DIST"
 echo "Moving .NET configurations to output"
 cp NLog.config "$PROJECT_DIST"/NLog.config
 cp appsettings.config "$PROJECT_DIST"/appsettings.config
-cp Web.config "$PROJECT_DIST"
+cp Web.config "$PROJECT_DIST"/Web.config
 cp connectionstrings.config "$PROJECT_DIST"/connectionstrings.config
 
 # build and copy the front-end artifact
