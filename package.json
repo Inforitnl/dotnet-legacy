@@ -1,6 +1,6 @@
 {
   "name": "bitbucketbuildcontainer",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Inforit Bitbucket legacy build docker",
   "main": "Dockerfile",
   "scripts": {

@@ -25,6 +25,19 @@ if [ -n "$MYGET_ACCESS_TOKEN" ]; then
     echo -e "\n@inforit:registry=https://www.myget.org/F/inforit/npm/\n//www.myget.org/F/inforit/npm/:_authToken=$MYGET_ACCESS_TOKEN" >> ~/.npmrc
 fi
 
+CS_PROJECT_NAME="Api"
+DIST="$ROOTDIRECTORY/dist"
+
+# change project name from default "Api"
+if [ -n "$PROJECT_NAME" ]; then
+  CS_PROJECT_NAME="$PROJECT_NAME"
+fi
+
+PROJECT_DIST="$DIST/$CS_PROJECT_NAME"
+ARTIFACTS_DIST="$DIST/artifacts"
+
+mkdir -p $ARTIFACTS_DIST
+
 # Location of the back-end (always server in legacy projects)
 cd server
 
@@ -34,13 +47,13 @@ msbuild *.sln
 
 echo "Moving .NET artifact to output"
 cd Inforit.*.Web
-mv bin /output/
+mv bin "$PROJECT_DIST"
 
 echo "Moving .NET configurations to output"
-cp NLog.config /output/NLog.config
-cp appsettings.config /output/appsettings.config
-cp Web.config /output/
-cp connectionstrings.config /output/connectionstrings.config
+find -type f -iname 'nlog.config' -exec cp {} $PROJECT_DIST \;
+find -type f -iname 'appsettings.config'  -exec cp {} $PROJECT_DIST \;
+find -type f -iname 'web.config'  -exec cp {} $PROJECT_DIST \;
+find -type f -iname 'connectionstrings.config'  -exec cp {} $PROJECT_DIST \;
 
 # build and copy the front-end artifact
 cd "$ROOTDIRECTORY"/client
@@ -56,4 +69,8 @@ npm run build --if-present
 npm run test --if-present
 
 echo "Moving the front-end artifact to output"
-mv ./dist /output/client
+mv ./dist "$PROJECT_DIST"/client
+
+# generate artifacts dir
+echo "generating artifacts"
+zip -r "$ARTIFACTS_DIST/$CS_PROJECT_NAME.zip" "$PROJECT_DIST/"
