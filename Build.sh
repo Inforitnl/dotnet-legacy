@@ -60,16 +60,16 @@ cd "$ROOTDIRECTORY"/client
 echo "Building the front-end artifact"
 
 # nodejs is managed via nvm, it must be started to use nodejs commands
-# . ~/.nvm/nvm.sh
-# source ~/.bashrc
-# nvm use ${NODEVERSION}
+. ~/.nvm/nvm.sh
+source ~/.bashrc
+nvm use ${NODEVERSION}
 
-# npm install
-# npm run build --if-present
-# npm run test --if-present
+npm install
+npm run build --if-present
+npm run test --if-present
 
-# echo "Moving the front-end artifact to output"
-# mv ./dist "$PROJECT_DIST"/client
+echo "Moving the front-end artifact to output"
+mv ./dist "$PROJECT_DIST"/client
 
 # generate artifacts dir
 echo "generating artifacts"
