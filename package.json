@@ -1,10 +1,10 @@
 {
   "name": "bitbucketbuildcontainer",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Inforit Bitbucket legacy build docker",
   "main": "Dockerfile",
   "scripts": {
-    "build": "docker build -t inforitnl/dotnet-legacy .",
+    "build": "export TARGET='dotnetLegacy' && ./build-and-tag.sh",
     "build-global-quote": "export TARGET='globalQuote' && ./build-and-tag.sh",
     "push": "docker push inforitnl/dotnet-legacy"
   },

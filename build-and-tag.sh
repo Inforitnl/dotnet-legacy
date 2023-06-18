@@ -1,7 +1,7 @@
 #!/bin/bash
 # associative arrays of app variables
 declare -A dotnetLegacy=(
-    [version]="1.0.0"
+    [version]="2.0.0"
     [nodeVersion]="19.8.1"
     [name]="dotnet-legacy"
 )
